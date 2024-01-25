@@ -1,0 +1,6 @@
+aiogram==3.3.0
+pydantic_settings==2.1.0
+loguru==0.7.2
+flake8==7.0.0
+black==23.12.1
+mypy==1.8.0
