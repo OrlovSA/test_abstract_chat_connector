@@ -18,9 +18,10 @@ class ChatTransportTelegram(ChatTransport):
         self.bot = bot
 
     def add_handler(self, event: str, text: str) -> None:
-        @self.router.message(Command(event))
         async def generic_handler(message: Message):
             await message.answer(text)
+
+        self.router.message(Command(event))(generic_handler)
 
     async def send_message(
         self, msg: str, chat_id: int = settings.TELEGRAM_CHAT_ID
@@ -30,4 +31,6 @@ class ChatTransportTelegram(ChatTransport):
 
     async def run(self) -> None:
         logger.info("run telegram bot")
+
+        self.dp.include_router(self.router)
         await self.dp.start_polling(self.bot)
